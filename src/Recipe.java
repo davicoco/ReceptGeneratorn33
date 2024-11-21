@@ -13,4 +13,8 @@ public class Recipe {
         this.instructions = instructions;
         this.mealCategory = mealCategory;
     }
+
+    public String getName() {
+        return name;
+    }
 }
