@@ -19,43 +19,50 @@ public class RecipeManagerTest {
 
     @Test
     void testAddRecipe() {
-        Recipe recipe = new Recipe("Korvstroganoff", new ArrayList<>(), new HashMap<>(), MealCategory.LUNCH);
-        this.recipeManager.addRecipe(recipe);
+        RecipeType recipe = new RegularRecipe("Korvstroganoff", new ArrayList<>(), new HashMap<>(), MealCategory.LUNCH);
+        RecipeType recipeVeg = new VegetarianRecipe("Linsgryta", new ArrayList<>(), new HashMap<>(), MealCategory.MIDDAG);
 
-        ArrayList<Recipe> recipes = this.recipeManager.getRecipes();
-        assertEquals(1, recipes.size(), "'recipes' listan borde innehålla ett recept");
+        this.recipeManager.addRecipe(recipe);
+        this.recipeManager.addRecipe(recipeVeg);
+
+        ArrayList<RecipeType> recipes = this.recipeManager.getRecipes();
+        assertEquals(2, recipes.size(), "'recipes' listan borde innehålla två recept");
     }
 
     @Test
     void testRemoveRecipe() {
-        Recipe recipe = new Recipe("Korvstroganoff", new ArrayList<>(), new HashMap<>(), MealCategory.LUNCH);
+        RecipeType recipe = new RegularRecipe("Korvstroganoff", new ArrayList<>(), new HashMap<>(), MealCategory.LUNCH);
+        RecipeType recipeVeg = new VegetarianRecipe("Linsgryta", new ArrayList<>(), new HashMap<>(), MealCategory.MIDDAG);
         this.recipeManager.addRecipe(recipe);
+        this.recipeManager.addRecipe(recipeVeg);
 
-        ArrayList<Recipe> recipes = this.recipeManager.getRecipes();
-        assertEquals(1, recipes.size(), "Listan ska innehålla ett recept innan det tas bort");
+        ArrayList<RecipeType> recipes = this.recipeManager.getRecipes();
+        assertEquals(2, recipes.size(), "Listan ska innehålla två recept innan det tas bort");
 
         this.recipeManager.removeRecipe(recipe);
+        this.recipeManager.removeRecipe(recipeVeg);
+
         assertEquals(0, recipes.size(), "Listan borde vara tom om");
     }
 
     @Test
     void testViewRecipes() {
-        Recipe recipe = new Recipe("Korvstroganoff", new ArrayList<>(), new HashMap<>(), MealCategory.LUNCH);
-        Recipe recipe1 =new Recipe("Spaghetti bolognese", new ArrayList<>(),new HashMap<>(),MealCategory.MIDDAG);
+        RecipeType recipe = new RegularRecipe("Korvstroganoff", new ArrayList<>(), new HashMap<>(), MealCategory.LUNCH);
+        RecipeType recipeVeg = new VegetarianRecipe("Linsgryta", new ArrayList<>(), new HashMap<>(), MealCategory.MIDDAG);
+
         this.recipeManager.addRecipe(recipe);
-        this.recipeManager.addRecipe(recipe1);
+        this.recipeManager.addRecipe(recipeVeg);
 
         ByteArrayOutputStream op = new ByteArrayOutputStream();
         PrintStream ps = new PrintStream(op);
-
         System.setOut(ps);
 
         this.recipeManager.viewRecipes();
 
         String output = op.toString().trim();
 
-        assertTrue(output.contains("Korvstroganoff"),"'Korvstroganoff' ska skrivas ut");
-        assertTrue(output.contains("Spaghetti bolognese"),"'Spaghetti bolognese' ska skrivas ut");
+        assertTrue(output.contains("Korvstroganoff"), "'Korvstroganoff' ska skrivas ut");
+        assertTrue(output.contains("Linsgryta"), "'Linsgryta' ska skrivas ut");
 
         System.setOut(System.out);
     }

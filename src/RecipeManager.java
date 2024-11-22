@@ -1,27 +1,27 @@
 import java.util.ArrayList;
 
 public class RecipeManager {
-    private ArrayList<Recipe> recipes;
+    private ArrayList<RecipeType> recipes;
 
     public RecipeManager(){
         this.recipes = new ArrayList<>();
     }
 
-    public void addRecipe(Recipe recipe) {
+    public void addRecipe(RecipeType recipe) {
         this.recipes.add(recipe);
     }
 
-    public void removeRecipe(Recipe recipe) {
+    public void removeRecipe(RecipeType recipe) {
         this.recipes.remove(recipe);
     }
 
     public void viewRecipes() {
-        for(Recipe r: this.recipes){
+        for(RecipeType r: this.recipes){
             System.out.println(r.getName());
         }
     }
 
-    public ArrayList<Recipe> getRecipes() {
+    public ArrayList<RecipeType> getRecipes() {
         return this.recipes;
     }
 
