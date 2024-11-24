@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class RecipeManager {
     private ArrayList<RecipeType> recipes;
@@ -25,6 +26,16 @@ public class RecipeManager {
         return this.recipes;
     }
 
+
+    @TODO(description = "Skriva koden till metoden createIngredient() för att skapa en lista av ingredienser")
+    public ArrayList<Ingredient> createIngredient(){
+        return null;
+    }
+
+    @TODO(description = "Skriva koden till metoden createInstruction()")
+    public HashMap<Integer,String> createInstruction(){
+        return null;
+    }
 
 
 }

@@ -38,4 +38,31 @@ public class VegetarianRecipe implements RecipeType{
     public boolean isVegetarian() {
         return true;
     }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setIngredients(ArrayList<Ingredient> ingredients) {
+        this.ingredients = ingredients;
+    }
+
+    public void setInstructions(HashMap<Integer, String> instructions) {
+        this.instructions = instructions;
+    }
+
+    public void setMealCategory(MealCategory mealCategory) {
+        this.mealCategory = mealCategory;
+    }
+
+    @Override
+    public String toString() {
+        return "VegetarianRecipe{" +
+                "name='" + name + '\'' +
+                ", ingredients=" + ingredients +
+                ", instructions=" + instructions +
+                ", mealCategory=" + mealCategory +
+                '}';
+    }
+
 }

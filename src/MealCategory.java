@@ -1,3 +1,5 @@
 public enum MealCategory {
-    LUNCH, MIDDAG
+    FRUKOST,
+    LUNCH,
+    MIDDAG
 }
