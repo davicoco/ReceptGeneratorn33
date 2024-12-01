@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class Main {
 
@@ -10,5 +11,12 @@ public class Main {
         for (Ingredient i : ingredients) {
             System.out.println(i);
         }
+        HashMap<Integer, String> instructions = rp.createInstruction();
+
+        for (Integer i : instructions.keySet()) {
+            System.out.println(i + instructions.get(i));
+
+        }
+
     }
 }

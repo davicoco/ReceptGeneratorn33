@@ -26,7 +26,7 @@ public class RecipeManager {
     public ArrayList<RecipeType> getRecipes() {
         return this.recipes;
     }
-    
+
     public ArrayList<Ingredient> createIngredient() {
         Scanner input = new Scanner(System.in);
         ArrayList<Ingredient> ingredients = new ArrayList<>();
@@ -43,7 +43,7 @@ public class RecipeManager {
                     while (true) {
                         System.out.println("Vilken ingrediens vill du lägga till?");
                         ingredientName = input.nextLine();
-                        if (ingredientName.matches("[a-zA-ZåäöÅÄÖ]+")) {
+                        if (ingredientName.matches("[a-zA-ZåäöÅÄÖ ]+")) {
                             break;
                         } else {
                             System.out.println("Fel uppstod! Var snäll och skriv in endast bokstäver");
@@ -54,7 +54,7 @@ public class RecipeManager {
                     while (true) {
                         System.out.println("Vad är måttet på ingrediensen? (st,dl,ml,gram,skivor etc...)");
                         ingredientMeasure = input.nextLine();
-                        if (ingredientMeasure.matches("[a-zA-ZåäöÅÄÖ]+")) {
+                        if (ingredientMeasure.matches("[a-zA-ZåäöÅÄÖ ]+")) {
                             break;
                         } else {
                             System.out.println("Fel uppstod! Var snäll och skriv in endast bokstäver");
@@ -78,7 +78,7 @@ public class RecipeManager {
 
                     Ingredient ingredient = new Ingredient(ingredientName, ingredientMeasure, ingredientAmount);
                     ingredients.add(ingredient);
-                    System.out.println("La till " + ingredientAmount +" "+ ingredientMeasure + " av " + ingredientName + " i ingredienslistan");
+                    System.out.println("La till " + ingredientAmount + " " + ingredientMeasure + " av " + ingredientName + " i ingredienslistan");
                 } catch (Exception e) {
                     System.out.println("Fel uppstod!");
                     input.nextLine();
@@ -86,7 +86,7 @@ public class RecipeManager {
 
             } else if (choice == 0) {
                 return ingredients;
-            }else {
+            } else {
                 System.out.println("Fel uppstod! Välj mellan alternativen 1 och 0");
             }
 
@@ -94,10 +94,37 @@ public class RecipeManager {
 
     }
 
-    @TODO(description = "Skriva koden till metoden createInstruction()")
     public HashMap<Integer, String> createInstruction() {
-        return null;
+        HashMap<Integer, String> instructions = new HashMap<>();
+        Scanner input = new Scanner(System.in);
+        int instructionKey = 1;
+        while (true) {
+            try {
+                System.out.println("1. Lägg till instruktions steg");
+                System.out.println("0. Färdigställ recept");
+                int choice = input.nextInt();
+                input.nextLine();
+                if (choice == 1) {
+                    String instruction;
+                    while (true) {
+                        System.out.println("Skriv steg: " + instructionKey + " för receptet");
+                        instruction = input.nextLine();
+                        if (instruction.matches("[a-zA-ZåäöÅÄÖ ]+")) {
+                            break;
+                        } else {
+                            System.out.println("Fel uppstod! Var snäll och skriv in bokstäver");
+                        }
+                    }
+                    instructions.put(instructionKey, instruction);
+                    System.out.println("La till steg: " + instructionKey + " med instruktionen: '" + instruction + "' till " +
+                            "Listan av instruktioner");
+                    instructionKey++;
+                } else if (choice == 0) {
+                    return instructions;
+                }
+            } catch (Exception e) {
+                System.out.println("Fel uppstod! Välj mellan alternativen 1 och 0");
+            }
+        }
     }
-
-
 }
