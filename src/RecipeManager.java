@@ -9,6 +9,7 @@ public class RecipeManager {
         this.recipes = new ArrayList<>();
     }
 
+    @TODO(description = "koppla createRecipe till addRecipe")
     public void addRecipe(RecipeType recipe) {
         this.recipes.add(recipe);
     }
@@ -127,4 +128,7 @@ public class RecipeManager {
             }
         }
     }
+
+    @TODO(description = "Skriva kod för createRecipe")
+    public RecipeType createRecipe(){return null;}
 }
