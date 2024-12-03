@@ -14,10 +14,13 @@ public class RecipeManager {
         this.recipes.add(recipe);
     }
 
+    @TODO(description = "Få removemetoden att funka")
     public void removeRecipe(RecipeType recipe) {
         this.recipes.remove(recipe);
     }
 
+    @TODO(description = "bestämma om denna metod ska göra så att man kan kolla på endast vegetariska/vanliga recept" +
+            "eller om det ska göras i main menyn")
     public void viewRecipes() {
         for (RecipeType r : this.recipes) {
             System.out.println(r.getName());
