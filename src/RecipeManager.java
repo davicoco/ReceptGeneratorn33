@@ -129,6 +129,62 @@ public class RecipeManager {
         }
     }
 
-    @TODO(description = "Skriva kod för createRecipe")
-    public RecipeType createRecipe(){return null;}
+    public RecipeType createRecipe() {
+        Scanner input = new Scanner(System.in);
+
+        String recipeName;
+
+        while (true) {
+            System.out.println("Skriv namnet på receptet!");
+            recipeName = input.nextLine();
+            if (recipeName.matches("[a-zA-ZåäöÅÄÖ ]+")) {
+                break;
+            } else {
+                System.out.println("Fel uppstod! Var snäll och skriv in endast bokstäver");
+            }
+        }
+
+        boolean isVegetarian;
+        while (true) {
+            System.out.println("Är receptet vegetariskt?(Ja/Nej)");
+            String isVegetarianAnswer = input.nextLine();
+            if (isVegetarianAnswer.equalsIgnoreCase("ja")) {
+                isVegetarian = true;
+                break;
+            } else if (isVegetarianAnswer.equalsIgnoreCase("nej")) {
+                isVegetarian = false;
+                break;
+            } else {
+                System.out.println("Svara ja eller nej på om recepetet är vegetariskt!");
+            }
+        }
+
+        MealCategory mealCategory = null;
+        while (mealCategory == null) {
+            System.out.println("Är måltiden Frukost, Lunch eller Middag?");
+            try {
+                String inputMealCategory = input.nextLine();
+                mealCategory = MealCategory.valueOf(inputMealCategory.toUpperCase());
+            } catch (IllegalArgumentException e) {
+                System.out.println("Måltiden kan endast vara i kategorierna: Frukost, Lunch och Middag");
+            }
+        }
+
+        System.out.println("Gör listan med ingredienser!");
+        ArrayList<Ingredient> ingredients = createIngredient();
+
+        System.out.println("Skriv alla instruktioner!");
+        HashMap<Integer, String> instructions = createInstruction();
+
+        RecipeType newRecipeCreated;
+        if (isVegetarian) {
+            newRecipeCreated = new VegetarianRecipe(recipeName, ingredients, instructions, mealCategory);
+        } else {
+            newRecipeCreated = new RegularRecipe(recipeName, ingredients, instructions, mealCategory);
+        }
+
+        System.out.println("Receptet: "+recipeName+" har lagts till i listan för recept!");
+
+        return newRecipeCreated;
+    }
 }
