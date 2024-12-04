@@ -13,7 +13,7 @@ public class RecipeManager {
         this.recipes.add(recipe);
     }
 
-    @TODO(description = "Implementera remove-metoden i main")
+    @TODO(description = "Implementera remove-metoden i main  ")
     public void removeRecipe(RecipeType recipe) {
         this.recipes.remove(recipe);
     }
