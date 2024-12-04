@@ -5,7 +5,7 @@ public interface RecipeType {
     String getName();
     MealCategory getMealCategory();
     ArrayList<Ingredient> getIngredients();
-    HashMap<String,Integer> getInstructions();
+    HashMap<Integer,String> getInstructions();
     boolean isVegetarian();
 
 }

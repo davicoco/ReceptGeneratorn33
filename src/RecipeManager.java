@@ -9,22 +9,65 @@ public class RecipeManager {
         this.recipes = new ArrayList<>();
     }
 
-    @TODO(description = "koppla createRecipe till addRecipe")
     public void addRecipe(RecipeType recipe) {
         this.recipes.add(recipe);
     }
 
-    @TODO(description = "Få removemetoden att funka")
+    @TODO(description = "Implementera remove-metoden i main")
     public void removeRecipe(RecipeType recipe) {
         this.recipes.remove(recipe);
     }
 
-    @TODO(description = "bestämma om denna metod ska göra så att man kan kolla på endast vegetariska/vanliga recept" +
-            "eller om det ska göras i main menyn")
-    public void viewRecipes() {
+    @TODO(description = "Implementera metoden för vanliga recept")
+    public void viewRegularRecipes(){}
+
+    public void viewVegetarianRecipes() {
+        ArrayList<RecipeType> vegetarianRecipes = new ArrayList<>();
+
+        int index = 1;
         for (RecipeType r : this.recipes) {
-            System.out.println(r.getName());
+            if (r.isVegetarian()) {
+                vegetarianRecipes.add(r);
+                System.out.println(index + ". " + r.getName());
+                index++;
+            }
         }
+
+        if (vegetarianRecipes.isEmpty()) {
+            System.out.println("Det finns inga vegetariskarecept!");
+            return;
+        }
+
+        System.out.println("Vegetariska Recept:");
+
+        showAllRecipeDetails(vegetarianRecipes);
+
+    }
+
+    public void showAllRecipeDetails(ArrayList<RecipeType> recipes) {
+        Scanner input = new Scanner(System.in);
+        System.out.println("Vilket recept vill du kolla på?");
+        int choice = input.nextInt() - 1;
+        input.nextLine();
+
+        if (choice < 0 || choice >= recipes.size()) {
+            System.out.println("Var snäll och välj ett av recepten");
+            return;
+        }
+
+        RecipeType recipeToWatch = recipes.get(choice);
+        System.out.println("Receptnamn: " + recipeToWatch.getName());
+        System.out.println("Vegetariskt: " + (recipeToWatch.isVegetarian() ? "Ja" : "Nej"));
+        System.out.println("Kategori: " + recipeToWatch.getMealCategory());
+        System.out.println("Ingredienser: ");
+        for (Ingredient ingredient : recipeToWatch.getIngredients()) {
+            System.out.println(ingredient.getAmount() + " " + ingredient.getMeasure() + " " + ingredient.getName());
+        }
+
+        System.out.println("Instruktioner: ");
+        recipeToWatch.getInstructions().forEach((stepNumber, instruction) -> {
+            System.out.println(stepNumber + ". " + instruction);
+        });
     }
 
     public ArrayList<RecipeType> getRecipes() {
@@ -186,7 +229,7 @@ public class RecipeManager {
             newRecipeCreated = new RegularRecipe(recipeName, ingredients, instructions, mealCategory);
         }
 
-        System.out.println("Receptet: "+recipeName+" har lagts till i listan för recept!");
+        System.out.println("Receptet: " + recipeName + " har lagts till i listan för recept!");
 
         return newRecipeCreated;
     }

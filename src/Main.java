@@ -1,24 +1,37 @@
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Scanner;
 
 public class Main {
-    @TODO(description = "Göra en meny med tre menyval lägga till, ta bort och visa recept")
+    @TODO(description = "Göra menyvalet ta bort recept")
     public static void main(String[] args) {
         RecipeManager rp = new RecipeManager();
 
-//        ArrayList<Ingredient> ingredients = rp.createIngredient();
-//
-//        for (Ingredient i : ingredients) {
-//            System.out.println(i);
-//        }
-//        HashMap<Integer, String> instructions = rp.createInstruction();
-//
-//        for (Integer i : instructions.keySet()) {
-//            System.out.println(i + instructions.get(i));
-//
-//        }
+        Scanner input = new Scanner(System.in);
+        boolean running = true;
+        while (running) {
+            System.out.println("1. Lägg till recept");
+            System.out.println("2. Visa vegetariska recept");
+            System.out.println("3. Visa vanliga recept");
+            System.out.println("4. Ta bort recept");
+            System.out.println("0. Avsluta program");
 
-        rp.createRecipe();
+            int choice = input.nextInt();
+            input.nextLine();
+            switch (choice) {
+                case 1 -> {
+                    RecipeType newRecipe = rp.createRecipe();
+                    rp.addRecipe(newRecipe);
+                }
+                case 2 -> rp.viewVegetarianRecipes();
 
+                case 3 -> rp.viewRegularRecipes();
+
+                case 0 -> running = false;
+
+                default -> System.out.println("Var snäll och välj ett av alternativen!");
+
+            }
+        }
     }
 }

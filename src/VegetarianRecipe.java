@@ -21,17 +21,17 @@ public class VegetarianRecipe implements RecipeType{
 
     @Override
     public MealCategory getMealCategory() {
-        return null;
+        return this.mealCategory;
     }
 
     @Override
     public ArrayList<Ingredient> getIngredients() {
-        return null;
+        return this.ingredients;
     }
 
     @Override
-    public HashMap<String, Integer> getInstructions() {
-        return null;
+    public HashMap<Integer, String> getInstructions() {
+        return this.instructions;
     }
 
     @Override
