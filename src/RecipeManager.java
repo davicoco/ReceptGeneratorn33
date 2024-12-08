@@ -13,15 +13,71 @@ public class RecipeManager {
         this.recipes.add(recipe);
     }
 
-    @TODO(description = "Implementera remove-metoden i main  ")
     public void removeRecipe(RecipeType recipe) {
         this.recipes.remove(recipe);
     }
 
-    @TODO(description = "Implementera metoden för vanliga recept")
-    public void viewRegularRecipes(){}
+    public ArrayList<RecipeType> getRecipes() {
+        return this.recipes;
+    }
 
-    public void viewVegetarianRecipes() {
+    public void chooseRecipeToRemove() {
+        if (this.recipes.isEmpty()) {
+            System.out.println("Fel uppstod! Det finns inga recept att ta bort");
+            return;
+        }
+        System.out.println("Ange siffran på receptet du vill ta bort:");
+        int index = 1;
+        for (RecipeType r : this.recipes) {
+            System.out.println(index + ". " + r.getName());
+            index++;
+        }
+
+        Scanner input = new Scanner(System.in);
+
+        int choice;
+        try {
+            choice = input.nextInt() - 1;
+            input.nextLine();
+        } catch (Exception e) {
+            System.out.println("Fel uppstod! Var snäll och skriv in en siffra");
+            input.nextLine();
+            return;
+        }
+
+        if (choice < 0 || choice >= this.recipes.size()) {
+            System.out.println("Fel uppstod! Var snäll och välj ett av alternativen som visas");
+            return;
+        }
+
+        RecipeType recipeToRemove = this.recipes.get(choice);
+        removeRecipe(recipeToRemove);
+        System.out.println("Receptet " + recipeToRemove.getName() + " har tagits bort.");
+    }
+
+    public void viewRegularRecipes(boolean skipDetails) {
+        ArrayList<RecipeType> regularRecipes = new ArrayList<>();
+
+        int index = 1;
+        for (RecipeType r : this.recipes) {
+            if (!r.isVegetarian()) {
+                regularRecipes.add(r);
+                System.out.println(index + ". " + r.getName());
+                index++;
+            }
+        }
+
+        if (regularRecipes.isEmpty()) {
+            System.out.println("Fel uppstod! Det finn inga vanliga recept!");
+            return;
+        }
+
+        if (!skipDetails) {
+            showAllRecipeDetails(regularRecipes);
+        }
+    }
+
+    public void viewVegetarianRecipes(boolean skipDetails) {
         ArrayList<RecipeType> vegetarianRecipes = new ArrayList<>();
 
         int index = 1;
@@ -34,24 +90,24 @@ public class RecipeManager {
         }
 
         if (vegetarianRecipes.isEmpty()) {
-            System.out.println("Det finns inga vegetariskarecept!");
+            System.out.println("Fel uppstod! Det finns inga vegetariska recept!");
             return;
         }
 
-        System.out.println("Vegetariska Recept:");
-
-        showAllRecipeDetails(vegetarianRecipes);
+        if (!skipDetails) {
+            showAllRecipeDetails(vegetarianRecipes);
+        }
 
     }
 
     public void showAllRecipeDetails(ArrayList<RecipeType> recipes) {
         Scanner input = new Scanner(System.in);
-        System.out.println("Vilket recept vill du kolla på?");
+        System.out.println("Ange siffran på det recept du vill kolla på!");
         int choice = input.nextInt() - 1;
         input.nextLine();
 
         if (choice < 0 || choice >= recipes.size()) {
-            System.out.println("Var snäll och välj ett av recepten");
+            System.out.println("Fel uppstod! Var snäll och välj ett av recepten");
             return;
         }
 
@@ -65,13 +121,8 @@ public class RecipeManager {
         }
 
         System.out.println("Instruktioner: ");
-        recipeToWatch.getInstructions().forEach((stepNumber, instruction) -> {
-            System.out.println(stepNumber + ". " + instruction);
-        });
-    }
-
-    public ArrayList<RecipeType> getRecipes() {
-        return this.recipes;
+        recipeToWatch.getInstructions().forEach((stepNumber, instruction) ->
+                System.out.println(stepNumber + ". " + instruction));
     }
 
     public ArrayList<Ingredient> createIngredient() {
@@ -81,64 +132,62 @@ public class RecipeManager {
         while (true) {
             System.out.println("1. Lägg till ingrediens");
             System.out.println("0. Färdig! Gå till nästa steg");
-            int choice = input.nextInt();
-            input.nextLine();
+            int choice;
+            try {
+                choice = input.nextInt();
+                input.nextLine();
+            } catch (Exception e) {
+                System.out.println("Fel uppstod! Var snäll och välj ett av alternativen");
+                input.nextLine();
+                continue;
+            }
             if (choice == 1) {
-                try {
-
-                    String ingredientName;
-                    while (true) {
-                        System.out.println("Vilken ingrediens vill du lägga till?");
-                        ingredientName = input.nextLine();
-                        if (ingredientName.matches("[a-zA-ZåäöÅÄÖ ]+")) {
-                            break;
-                        } else {
-                            System.out.println("Fel uppstod! Var snäll och skriv in endast bokstäver");
-                        }
+                String ingredientName;
+                while (true) {
+                    System.out.println("Vilken ingrediens vill du lägga till?");
+                    ingredientName = input.nextLine();
+                    if (ingredientName.matches("[a-zA-ZåäöÅÄÖ ]+")) {
+                        break;
+                    } else {
+                        System.out.println("Fel uppstod! Var snäll och skriv in endast bokstäver");
                     }
-
-                    String ingredientMeasure;
-                    while (true) {
-                        System.out.println("Vad är måttet på ingrediensen? (st,dl,ml,gram,skivor etc...)");
-                        ingredientMeasure = input.nextLine();
-                        if (ingredientMeasure.matches("[a-zA-ZåäöÅÄÖ ]+")) {
-                            break;
-                        } else {
-                            System.out.println("Fel uppstod! Var snäll och skriv in endast bokstäver");
-                        }
-                    }
-
-                    double ingredientAmount;
-                    while (true) {
-                        try {
-                            System.out.println("Hur mycket av ingrediensen vill du lägga till?");
-                            ingredientAmount = Double.parseDouble(input.nextLine());
-                            if (ingredientAmount > 0) {
-                                break;
-                            } else {
-                                System.out.println("Fel uppstod! Mängden måste vara större än 0");
-                            }
-                        } catch (NumberFormatException e) {
-                            System.out.println("Fel uppstod! Var snäll och skriv in endast siffror");
-                        }
-                    }
-
-                    Ingredient ingredient = new Ingredient(ingredientName, ingredientMeasure, ingredientAmount);
-                    ingredients.add(ingredient);
-                    System.out.println("La till " + ingredientAmount + " " + ingredientMeasure + " av " + ingredientName + " i ingredienslistan");
-                } catch (Exception e) {
-                    System.out.println("Fel uppstod!");
-                    input.nextLine();
                 }
 
+                String ingredientMeasure;
+                while (true) {
+                    System.out.println("Vad är måttet på ingrediensen? (st,dl,ml,gram,skivor etc...)");
+                    ingredientMeasure = input.nextLine();
+                    if (ingredientMeasure.matches("[a-zA-ZåäöÅÄÖ ]+")) {
+                        break;
+                    } else {
+                        System.out.println("Fel uppstod! Var snäll och skriv in endast bokstäver");
+                    }
+                }
+
+                double ingredientAmount;
+                while (true) {
+                    try {
+                        System.out.println("Hur mycket av ingrediensen vill du lägga till?");
+                        ingredientAmount = Double.parseDouble(input.nextLine());
+                        if (ingredientAmount > 0) {
+                            break;
+                        } else {
+                            System.out.println("Fel uppstod! Mängden måste vara större än 0");
+                        }
+                    } catch (NumberFormatException e) {
+                        System.out.println("Fel uppstod! Var snäll och skriv in endast siffror");
+                    }
+                }
+
+                Ingredient ingredient = new Ingredient(ingredientName, ingredientMeasure, ingredientAmount);
+                ingredients.add(ingredient);
+                System.out.println("La till " + ingredientAmount + " " + ingredientMeasure + " av " + ingredientName + " i ingredienslistan");
             } else if (choice == 0) {
                 return ingredients;
             } else {
                 System.out.println("Fel uppstod! Välj mellan alternativen 1 och 0");
             }
-
         }
-
     }
 
     public HashMap<Integer, String> createInstruction() {
@@ -168,9 +217,12 @@ public class RecipeManager {
                     instructionKey++;
                 } else if (choice == 0) {
                     return instructions;
+                }else {
+                    System.out.println("Fel uppstod! Välj mellan alternativen 1 och 0");
                 }
             } catch (Exception e) {
                 System.out.println("Fel uppstod! Välj mellan alternativen 1 och 0");
+                input.nextLine();
             }
         }
     }

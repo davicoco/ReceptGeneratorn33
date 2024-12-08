@@ -48,20 +48,40 @@ public class RecipeManagerTest {
     @Test
     void testViewRecipes() {
         RecipeType recipe = new RegularRecipe("Korvstroganoff", new ArrayList<>(), new HashMap<>(), MealCategory.LUNCH);
-        RecipeType recipeVeg = new VegetarianRecipe("Linsgryta", new ArrayList<>(), new HashMap<>(), MealCategory.MIDDAG);
 
         this.recipeManager.addRecipe(recipe);
+
+        ByteArrayOutputStream op = new ByteArrayOutputStream();
+        PrintStream ps = new PrintStream(op);
+        PrintStream realOutput = System.out;
+        System.setOut(ps);
+
+        this.recipeManager.viewRegularRecipes(true);
+
+        System.setOut(realOutput);
+        String output = op.toString().trim();
+
+        assertTrue(output.contains("Korvstroganoff"), "'Korvstroganoff' ska skrivas ut");
+
+        System.setOut(System.out);
+    }
+
+    @Test
+    void testViewVegetarianRecipe(){
+        RecipeType recipeVeg = new VegetarianRecipe("Linsgryta", new ArrayList<>(), new HashMap<>(), MealCategory.MIDDAG);
+
         this.recipeManager.addRecipe(recipeVeg);
 
         ByteArrayOutputStream op = new ByteArrayOutputStream();
         PrintStream ps = new PrintStream(op);
+        PrintStream realOutput = System.out;
         System.setOut(ps);
 
-        this.recipeManager.viewRecipes();
+        this.recipeManager.viewVegetarianRecipes(true);
 
+        System.setOut(realOutput);
         String output = op.toString().trim();
 
-        assertTrue(output.contains("Korvstroganoff"), "'Korvstroganoff' ska skrivas ut");
         assertTrue(output.contains("Linsgryta"), "'Linsgryta' ska skrivas ut");
 
         System.setOut(System.out);

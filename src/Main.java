@@ -23,9 +23,11 @@ public class Main {
                     RecipeType newRecipe = rp.createRecipe();
                     rp.addRecipe(newRecipe);
                 }
-                case 2 -> rp.viewVegetarianRecipes();
+                case 2 -> rp.viewVegetarianRecipes(false);
 
-                case 3 -> rp.viewRegularRecipes();
+                case 3 -> rp.viewRegularRecipes(false);
+
+                case 4 -> rp.chooseRecipeToRemove();
 
                 case 0 -> running = false;
 
