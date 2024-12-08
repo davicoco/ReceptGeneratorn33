@@ -3,7 +3,6 @@ import java.util.HashMap;
 import java.util.Scanner;
 
 public class Main {
-    @TODO(description = "Göra menyvalet ta bort recept")
     public static void main(String[] args) {
         RecipeManager rp = new RecipeManager();
 

@@ -39,21 +39,4 @@ public class RegularRecipe implements RecipeType {
         return false;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public void setIngredients(ArrayList<Ingredient> ingredients) {
-        this.ingredients = ingredients;
-    }
-
-    public void setInstructions(HashMap<Integer, String> instructions) {
-        this.instructions = instructions;
-    }
-
-    public void setMealCategory(MealCategory mealCategory) {
-        this.mealCategory = mealCategory;
-    }
-
-
 }
