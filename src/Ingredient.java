@@ -13,32 +13,12 @@ public class Ingredient {
         return name;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
     public String getMeasure() {
         return measure;
-    }
-
-    public void setMeasure(String measure) {
-        this.measure = measure;
     }
 
     public double getAmount() {
         return amount;
     }
 
-    public void setAmount(double amount) {
-        this.amount = amount;
-    }
-
-    @Override
-    public String toString() {
-        return "Ingredient{" +
-                "name='" + name + '\'' +
-                ", measure='" + measure + '\'' +
-                ", amount=" + amount +
-                '}';
-    }
 }
